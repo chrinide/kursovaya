@@ -44,8 +44,6 @@ samples = np.fromstring(content, dtype=types[sampwidth])
 max_plot = 0
 middle = 0
 plus_plot = 0
-plt.figure(1, figsize=(float(w)/DPI, float(h)/DPI), dpi=DPI)
-plt.subplots_adjust(wspace=0, hspace=0)
 for n in range(nchannels):
     channel = samples[n::nchannels]
     channel = channel[0::k]
@@ -57,21 +55,11 @@ for n in range(nchannels):
     		max_plot=channel[plot]
     if nchannels == 1:
         channel = channel - peak
-    axes = plt.subplot(2, 1, n+1, axisbg="k")
-    axes.plot(channel, "g")
-    axes.yaxis.set_major_formatter(ticker.FuncFormatter(format_db))
-    plt.grid(True, color="w")
-    axes.xaxis.set_major_formatter(ticker.NullFormatter())
+
 
 middle_plot = int(plus_plot/middle)	
 melod = int(max_plot/middle_plot)
-print(max_plot)
-print(middle_plot)
-print(melod)
 if melod>5:
 	print("Melodious")
 else:
 	print("Tuneless")
-axes.xaxis.set_major_formatter(ticker.FuncFormatter(format_time))
-plt.savefig("wave", dpi=DPI)
-plt.show()
