@@ -10,26 +10,6 @@ types = {
     4: np.int32
 }
 
-def format_time(x, pos=None):
-    global duration, nframes, k
-    progress = int(x / float(nframes) * duration * k)
-    mins, secs = divmod(progress, 60)
-    hours, mins = divmod(mins, 60)
-    out = "%d:%02d" % (mins, secs)
-    if hours > 0:
-        out = "%d:" % hours
-    return out
-
-def format_db(x, pos=None):
-    if pos == 0:
-        return ""
-    global peak
-    if x == 0:
-        return "-inf"
-
-    db = 20 * math.log10(abs(x) / float(peak))
-    return int(db)
-
 wav = wave.open("Temple.wav", mode="r")
 (nchannels, sampwidth, framerate, nframes, comptype, compname) = wav.getparams()
 
@@ -55,7 +35,6 @@ for n in range(nchannels):
     		max_plot=channel[plot]
     if nchannels == 1:
         channel = channel - peak
-
 
 middle_plot = int(plus_plot/middle)	
 melod = int(max_plot/middle_plot)
